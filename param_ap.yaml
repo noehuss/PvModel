@@ -1,0 +1,18 @@
+### perte inclinaison orientation ###
+
+pertes_installation:
+  inclinaison: [0,10,20,30,40,50,60,90]
+  orientation: # en %
+    est: [0.93,0.92,0.91,0.9,0.87,0.83,0.78,0.55]
+    sud_est: [0.93,0.94,0.95,0.96,0.94,0.92,0.88,0.66]
+    sud: [0.93,0.95,0.98,1,0.98,0.95,0.91,0.68]
+    sud_ouest: [0.93,0.94,0.95,0.96,0.94,0.92,0.88,0.66]
+    ouest: [0.93,0.92,0.91,0.9,0.87,0.83,0.78,0.55]
+
+### puissance installable ###
+
+ratio_puissance: # W/m²
+  toiture_inclinee: 180
+  toiture_plane: 80
+  ombriere: 250
+  sol: 100
