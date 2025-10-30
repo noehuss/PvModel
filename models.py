@@ -63,6 +63,9 @@ class Centrale(ABC):
         self.powerMax = sum(peigne.powerMax for peigne in self.peignes)
         self.productible = sum(peigne.productible*peigne.powerMax for peigne in self.peignes)/self.powerMax # weighted average
         self._centrale_definition(power)
+        self.capex: float
+        self.opex: float
+        self.lcoe: float
 
     def _centrale_definition(self, power):
         self.power = min(power, self.powerMax) if power else self.powerMax
@@ -104,22 +107,53 @@ class Centrale(ABC):
     def _opex(self):
         pass
 
+    def _lcoe(self):
+        print(self.total_production)
+        self.lcoe = (self.capex*1000 + 18.25849635*self.opex)/(14.68895095*self.total_production/1000)
+
+    def estimation_eco(self, **kwargs):
+        """
+        **kwargs: 
+            - structure: Simple, Double, Mixte
+            - config_sol: Complexe, Moyen, Facile
+        """
+        self._capex(**kwargs)
+        self._opex()
+        self._lcoe()
+
 class CentraleOmbriere(Centrale):
     def _capex(self, **kwargs):
+        """
+        **kwargs: 
+            - structure: Simple, Double, Mixte
+            - config_sol: Complexe, Moyen, Facile
+        """
         for k, val in kwargs.items():
-            pass
+            print(k, "=", val)
+        coeffs = param_ap['capex_centrale_ombriere'][kwargs['structure']][kwargs['config_sol']]
+        if self.power <= 700:
+            self.capex = coeffs['a'] + coeffs['b']/(1+(self.power/coeffs['c'])**(-coeffs['d']))
+        else:
+            self.capex = coeffs['k'] + 184.7
 
     def _opex(self):
-        pass
+        if self.power < 200:
+            self.opex = 8.54*self.power + 6630
+        elif self.power < 500:
+            self.opex = 8.17*self.power + 7420
+        else:
+            self.opex = 15.6*self.power + 5960
 
-
-omb = OmbrierePeigne(id=1, surface=1000, orientation='est', inclinaison=10, productible=1000)
+omb = OmbrierePeigne(id=1, surface=3000, orientation='est', inclinaison=10, productible=1000)
 toi = ToitureInclineePeigne(id=2, surface=20, orientation='sud', inclinaison=20, productible=1200)
 sol = SolPeigne(id=3, surface=30, orientation='ouest', inclinaison=20, productible=900)
 
-centrale = CentraleOmbriere(id="C1", peignes=[omb], power=250)
+centrale = CentraleOmbriere(id="C1", peignes=[omb], power=800)
 print([p.power for p in centrale.peignes])
-
+centrale.estimation_eco(structure='Double', config_sol='Facile')
+print(centrale.capex)
+print(centrale.opex)
+print(centrale.lcoe)
 df = centrale.production_profile()
 
 print(df.head())  # courbe horaire totale

@@ -16,3 +16,67 @@ ratio_puissance: # W/m²
   toiture_plane: 80
   ombriere: 228
   sol: 100
+
+
+### 
+
+capex_centrale_ombriere:
+  Simple:
+    Complexe:
+      a: 138
+      b: 2832
+      c: 978
+      d: 1.53
+      k: 1.44329
+    Moyen:
+      a: 137
+      b: 2663
+      c: 955
+      d: 1.55
+      k: 1.3934
+    Facile:
+      a: 136
+      b: 2554
+      c: 933
+      d: 1.56
+      k: 1.3432
+
+  Mixte:
+    Complexe:
+      a: 137
+      b: 2693
+      c: 955
+      d: 1.55
+      k: 1.3932
+    Moyen:
+      a: 136
+      b: 2534
+      c: 928
+      d: 1.56
+      k: 1.3432
+    Facile:
+      a: 135
+      b: 2415
+      c: 910
+      d: 1.58
+      k: 1.2932
+
+  Double:
+    Complexe:
+      a: 136
+      b: 2554
+      c: 933
+      d: 1.56
+      k: 1.3432
+    Moyen:
+      a: 135
+      b: 2415
+      c: 910
+      d: 1.58
+      k: 1.2932
+    Facile:
+      a: 134
+      b: 2276
+      c: 880
+      d: 1.6
+      k: 1.2432
