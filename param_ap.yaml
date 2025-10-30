@@ -14,5 +14,5 @@ pertes_installation:
 ratio_puissance: # W/m²
   toiture_inclinee: 180
   toiture_plane: 80
-  ombriere: 250
+  ombriere: 228
   sol: 100
